@@ -9,7 +9,10 @@ from sqlmodel import select
 router = APIRouter()
 
 
-@router.post('/customers', response_model=Customer, tags=['customers']) #response para mostrar a fastapi que el tipo de data retornado es customer
+@router.post('/customers', 
+             response_model=Customer, 
+             status_code = status.HTTP_201_CREATED,
+             tags=['customers']) #response para mostrar a fastapi que el tipo de data retornado es customer
 async def create_customer(customer_data: CustomerCreate, session: SessionDep):
     customer = Customer.model_validate(customer_data.model_dump()) #To retrieve a dict with data from user
     session.add(customer)
